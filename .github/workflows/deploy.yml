@@ -13,14 +13,14 @@ on:
 
   workflow_dispatch:
     inputs:
-      mode:
-        description: 'Mode Deployment'
+      target:
+        description: 'Target Deployment'
         required: true
-        default: 'full'
+        default: 'all'
         type: choice
         options:
-          - full
-          - update
+          - all
+          - vps
 
 concurrency:
   group: deploy-${{ github.ref_name }}
@@ -36,7 +36,7 @@ jobs:
     outputs:
       app_type:    ${{ steps.detect.outputs.app_type }}
       repo_slug:   ${{ steps.slug.outputs.repo_slug }}
-      has_artisan: ${{ steps.detect.outputs.has_artisan }}
+      has_node:    ${{ steps.detect.outputs.has_node }}
 
     steps:
       - name: ⬇️ Checkout Repository
@@ -57,23 +57,24 @@ jobs:
         run: |
           if [[ -f "artisan" && -f "composer.json" ]]; then
             echo "app_type=Laravel" >> "$GITHUB_OUTPUT"
-            echo "has_artisan=true" >> "$GITHUB_OUTPUT"
           elif [[ -f "composer.json" ]]; then
             echo "app_type=PHP Composer" >> "$GITHUB_OUTPUT"
-            echo "has_artisan=false" >> "$GITHUB_OUTPUT"
-          else
+          elif ls *.php 1> /dev/null 2>&1; then
             echo "app_type=PHP Native" >> "$GITHUB_OUTPUT"
-            echo "has_artisan=false" >> "$GITHUB_OUTPUT"
+          elif [[ -f "package.json" ]]; then
+            echo "app_type=Node.js" >> "$GITHUB_OUTPUT"
+          else
+            echo "app_type=Static HTML5" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: ✅ Framework Validation
-        run: |
-          echo "Validating project structure for $APP_TYPE..."
-          echo "Framework detected: ${{ steps.detect.outputs.app_type }}"
-          echo "Artisan present: ${{ steps.detect.outputs.has_artisan }}"
+          if [[ -f "package.json" ]]; then
+            echo "has_node=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_node=false" >> "$GITHUB_OUTPUT"
+          fi
 
   # ──────────────────────────────────────────────────────────
-  # JOB 2: PACKAGE & TRIGGER DEPLOYMENT
+  # JOB 2: PACKAGE & TRIGGER AUTODEPLOY
   # ──────────────────────────────────────────────────────────
   deploy:
     name: 🚀 2. Package & Deploy to VPS
@@ -89,7 +90,7 @@ jobs:
       - name: ⬇️ Checkout Repository
         uses: actions/checkout@v4
 
-      - name: 📦 Create Deployment ZIP (Excluding Vendor & Node Modules)
+      - name: 📦 Create Deployment Package (ZIP)
         run: |
           find . \
             -not -path "./.git/*" \
@@ -103,18 +104,18 @@ jobs:
 
           ZIP_SIZE=$(du -sh deploy.zip | cut -f1)
           echo "ZIP_SIZE=$ZIP_SIZE" >> "$GITHUB_ENV"
-          echo "✅ Laravel deploy package created: $ZIP_SIZE"
+          echo "✅ Package created successfully: $ZIP_SIZE"
 
-      - name: 🌐 Send Trigger to Server VPS
-        id: trigger
+      - name: 🌐 Trigger VPS AutoDeploy Webhook
+        id: webhook
         run: |
           START_TIME=$(date +%s)
-          echo "Mengirim notifikasi AutoDeploy ke server $VPS_HOST:$VPS_PORT..."
+          echo "Mengirim payload trigger ke VPS ($VPS_HOST:$VPS_PORT)..."
           
           HTTP_CODE=$(curl -s -o response.txt -w "%{http_code}" \
             -X POST \
             -H "Content-Type: application/json" \
-            -d "{\"event\":\"push\",\"repository\":\"${{ github.repository }}\",\"commit\":\"${{ github.sha }}\",\"ref\":\"${{ github.ref }}\",\"app_type\":\"Laravel\"}" \
+            -d "{\"event\":\"push\",\"repository\":\"${{ github.repository }}\",\"commit\":\"${{ github.sha }}\",\"ref\":\"${{ github.ref }}\",\"app_type\":\"$APP_TYPE\"}" \
             "http://$VPS_HOST:$VPS_PORT" || echo "000")
 
           END_TIME=$(date +%s)
@@ -122,20 +123,22 @@ jobs:
 
           echo "HTTP_CODE=$HTTP_CODE" >> "$GITHUB_ENV"
           echo "LATENCY=${LATENCY}s" >> "$GITHUB_ENV"
+          echo "Server Response:"
+          cat response.txt || true
 
           if [[ "$HTTP_CODE" == "200" || "$HTTP_CODE" == "201" ]]; then
             echo "DEPLOY_STATUS=SUCCESS" >> "$GITHUB_ENV"
           else
-            echo "DEPLOY_STATUS=PENDING_SYNC" >> "$GITHUB_ENV"
+            echo "DEPLOY_STATUS=PENDING_CRON" >> "$GITHUB_ENV"
           fi
 
-      - name: 📝 Generate Job Summary (Dashboard)
+      - name: 📝 Generate GitHub Step Summary (Dashboard)
         if: always()
         run: |
           if [[ "${{ env.DEPLOY_STATUS }}" == "SUCCESS" ]]; then
-            STATUS_BADGE="🟢 SUKSES (Webhook Triggered & Synchronized)"
+            STATUS_BADGE="🟢 SUKSES (Live Instan via Webhook)"
           else
-            STATUS_BADGE="🟡 BERJALAN (Pending Synchronize)"
+            STATUS_BADGE="🟡 BERJALAN (Sinkronisasi via Cron 5 Menit)"
           fi
 
           cat >> "$GITHUB_STEP_SUMMARY" << EOF
@@ -150,27 +153,23 @@ jobs:
           | Parameter | Nilai / Keterangan |
           | :--- | :--- |
           | **Status Pipeline** | **$STATUS_BADGE** |
-          | **Tipe Aplikasi** | **Laravel Framework (PHP)** |
+          | **Tipe Aplikasi** | **\`$APP_TYPE\`** |
           | **Repository** | \`${{ github.repository }}\` |
           | **Branch** | \`${{ github.ref_name }}\` |
           | **Commit SHA** | \`${{ github.sha }}\` |
-          | **Ukuran Paket ZIP** | \`${{ env.ZIP_SIZE }}\` (Vendor & node_modules dikecualikan) |
+          | **Ukuran Package** | \`${{ env.ZIP_SIZE }}\` (Vendor & node_modules dikecualikan) |
           | **Latensi Transmisi** | \`${{ env.LATENCY }}\` |
-          | **Target Server VPS** | \`103.180.124.142\` (Ubuntu 24.04 LTS) |
+          | **Target Server VPS** | \`$VPS_HOST\` (Ubuntu 24.04 LTS) |
 
           ---
 
           ### 🌐 Akses Layanan & Server
-          * **Dokploy PaaS Manager:** [http://103.180.124.142:3000](http://103.180.124.142:3000)
+          * **Dokploy PaaS Manager:** [http://$VPS_HOST:3000](http://$VPS_HOST:3000)
           * **Domain Publik Server:** [http://103-180-124-142.sslip.io](http://103-180-124-142.sslip.io)
-          * **Akses Port Nginx Langsung:** [http://103.180.124.142:30000](http://103.180.124.142:30000)
+          * **Akses Port Nginx Langsung:** [http://$VPS_HOST:30000](http://$VPS_HOST:30000)
 
           ---
 
-          ### ⚙️ Langkah Setup Laravel di Production:
-          1. Di server/Dokploy, salin \`.env.example\` menjadi \`.env\`.
-          2. Jalankan \`composer install --no-dev --optimize-autoloader\`.
-          3. Jalankan \`php artisan key:generate\`.
-          4. Jalankan \`php artisan migrate --force\`.
-          5. Arahkan Webroot Nginx ke direktori \`public/\`.
+          > 💡 **Prinsip Sub-CPMK-3 (Application Virtualization):**  
+          > Pipeline secara otomatis mendeteksi struktur proyek Laravel, mengemas kode sumber tanpa dependensi berat (vendor/node_modules), dan menyinkronkan status ke dashboard produksi secara real-time.
           EOF
