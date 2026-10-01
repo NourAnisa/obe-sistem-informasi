@@ -1,0 +1,438 @@
+<!-- Portfolio Dashboard & Views - Comprehensive Blade Templates
+     Simpan ke:
+     - resources/views/portfolio/dashboard.blade.php
+     - resources/views/portfolio/evidences/index.blade.php
+     - resources/views/portfolio/evidences/create.blade.php
+     - resources/views/portfolio/evidences/edit.blade.php
+     - resources/views/portfolio/evidences/show.blade.php
+-->
+
+========== FILE 1: portfolio/dashboard.blade.php ==========
+
+@extends('layouts.dashboard')
+@section('title', 'Portfolio - ' . $mahasiswa->nama_lengkap)
+@section('content')
+<div class="p-6 space-y-6 max-w-7xl mx-auto">
+    <div>
+        <h1 class="text-3xl font-bold text-slate-900">📚 Portfolio Saya</h1>
+        <p class="text-slate-600 mt-1">Pantau pencapaian CPMK dan kumpulkan bukti pembelajaran</p>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="bg-white rounded-lg p-4 shadow-sm border border-slate-200">
+            <p class="text-sm font-medium text-slate-600">Total Evidence</p>
+            <p class="text-3xl font-bold text-blue-600">{{ $stats['total_evidences'] }}</p>
+        </div>
+        <div class="bg-white rounded-lg p-4 shadow-sm border border-slate-200">
+            <p class="text-sm font-medium text-slate-600">Disetujui</p>
+            <p class="text-3xl font-bold text-green-600">{{ $stats['approved_evidences'] }}</p>
+        </div>
+        <div class="bg-white rounded-lg p-4 shadow-sm border border-slate-200">
+            <p class="text-sm font-medium text-slate-600">Pending Review</p>
+            <p class="text-3xl font-bold text-amber-600">{{ $stats['under_review_evidences'] }}</p>
+        </div>
+        <div class="bg-white rounded-lg p-4 shadow-sm border border-slate-200">
+            <p class="text-sm font-medium text-slate-600">Completion</p>
+            <p class="text-3xl font-bold text-purple-600">{{ number_format($stats['completion_percentage'], 1) }}%</p>
+        </div>
+    </div>
+
+    <!-- Progress -->
+    <div class="bg-white rounded-lg p-6 shadow-sm border border-slate-200">
+        <h2 class="font-semibold text-slate-900 mb-4">📊 Progress Portfolio</h2>
+        <div class="space-y-3">
+            <div class="flex justify-between text-sm">
+                <span class="text-slate-600">{{ $stats['approved_evidences'] }} dari {{ $stats['total_evidences'] }} evidence disetujui</span>
+                <span class="font-bold text-blue-600">{{ number_format($stats['completion_percentage'], 1) }}%</span>
+            </div>
+            <div class="w-full bg-slate-200 rounded-full h-4 overflow-hidden">
+                <div class="bg-gradient-to-r from-blue-500 to-blue-600 h-full rounded-full transition-all" 
+                     style="width: {{ $stats['completion_percentage'] }}%"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex flex-wrap gap-3">
+        <a href="{{ route('portfolio.evidences.create') }}" 
+           class="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700">
+            <span>➕</span> Tambah Evidence
+        </a>
+        <a href="{{ route('portfolio.evidences.index') }}" 
+           class="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-100 text-slate-700 font-medium rounded-lg hover:bg-slate-200">
+            <span>📋</span> Lihat Semua
+        </a>
+    </div>
+
+    <!-- Recent Evidence -->
+    <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
+        <div class="p-6 border-b border-slate-200">
+            <h2 class="font-semibold text-slate-900">📌 Evidence Terbaru</h2>
+        </div>
+        <div class="divide-y divide-slate-200">
+            @forelse($portfolio->evidences()->latest()->limit(5)->get() as $evidence)
+                <div class="p-4 hover:bg-slate-50">
+                    <div class="flex justify-between items-start">
+                        <div class="flex-1">
+                            <a href="{{ route('portfolio.evidences.show', $evidence) }}" 
+                               class="font-medium text-blue-600 hover:underline">
+                                {{ $evidence->title }}
+                            </a>
+                            <span class="ml-3 px-2.5 py-1 text-xs font-semibold rounded-full inline-block"
+                                  style="background-color: {{ match($evidence->status) { 'approved' => '#dcfce7', 'submitted' => '#dbeafe', 'under_review' => '#fef3c7', 'draft' => '#f3f4f6', 'rejected' => '#fee2e2', default => '#f3f4f6' } }}; color: {{ match($evidence->status) { 'approved' => '#166534', 'submitted' => '#0c4a6e', 'under_review' => '#92400e', 'draft' => '#374151', 'rejected' => '#991b1b', default => '#374151' } }};">
+                                {{ ucfirst($evidence->status) }}
+                            </span>
+                            <p class="text-xs text-slate-500 mt-2">{{ $evidence->created_at->format('d M Y H:i') }}</p>
+                        </div>
+                        <a href="{{ route('portfolio.evidences.show', $evidence) }}" 
+                           class="px-3 py-1 text-sm text-blue-600 hover:text-blue-700">Lihat</a>
+                    </div>
+                </div>
+            @empty
+                <div class="p-8 text-center text-slate-600">Belum ada evidence</div>
+            @endforelse
+        </div>
+    </div>
+</div>
+@endsection
+
+
+========== FILE 2: portfolio/evidences/index.blade.php ==========
+
+@extends('layouts.dashboard')
+@section('title', 'Semua Evidence')
+@section('content')
+<div class="p-6 space-y-6 max-w-7xl mx-auto">
+    <div class="flex justify-between items-center">
+        <div>
+            <h1 class="text-3xl font-bold text-slate-900">📋 Evidence Saya</h1>
+            <p class="text-slate-600 mt-1">Kelola semua bukti pembelajaran</p>
+        </div>
+        <a href="{{ route('portfolio.evidences.create') }}" 
+           class="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700">
+            ➕ Evidence Baru
+        </a>
+    </div>
+
+    <!-- Evidence List -->
+    <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
+        @forelse($evidences as $evidence)
+            <div class="border-b border-slate-200 last:border-b-0 hover:bg-slate-50 p-4">
+                <div class="flex items-start justify-between">
+                    <div class="flex-1">
+                        <a href="{{ route('portfolio.evidences.show', $evidence) }}" 
+                           class="font-semibold text-blue-600 hover:underline">
+                            {{ $evidence->title }}
+                        </a>
+                        <p class="text-sm text-slate-600 mt-1">
+                            @if($evidence->file_name) 📎 {{ $evidence->file_name }} @endif
+                        </p>
+                        <div class="flex gap-2 mt-2">
+                            <span class="px-2.5 py-1 text-xs font-semibold rounded-full"
+                                  style="background-color: {{ match($evidence->status) { 'approved' => '#dcfce7', 'submitted' => '#dbeafe', 'under_review' => '#fef3c7', 'draft' => '#f3f4f6', 'rejected' => '#fee2e2', default => '#f3f4f6' } }}; color: {{ match($evidence->status) { 'approved' => '#166534', 'submitted' => '#0c4a6e', 'under_review' => '#92400e', 'draft' => '#374151', 'rejected' => '#991b1b', default => '#374151' } }};">
+                                {{ ucfirst($evidence->status) }}
+                            </span>
+                            <span class="text-xs text-slate-500">{{ $evidence->created_at->format('d M Y') }}</span>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="{{ route('portfolio.evidences.show', $evidence) }}" 
+                           class="px-4 py-2 text-sm font-medium bg-blue-100 text-blue-700 hover:bg-blue-200 rounded">Lihat</a>
+                        @if($evidence->status === 'draft')
+                            <a href="{{ route('portfolio.evidences.edit', $evidence) }}" 
+                               class="px-4 py-2 text-sm font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 rounded">Edit</a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        @empty
+            <div class="p-12 text-center text-slate-600">
+                <p class="text-lg mb-4">📭 Belum ada evidence</p>
+                <a href="{{ route('portfolio.evidences.create') }}" 
+                   class="inline-block px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700">
+                    Upload Evidence Pertama
+                </a>
+            </div>
+        @endforelse
+    </div>
+    {{ $evidences->links() }}
+</div>
+@endsection
+
+
+========== FILE 3: portfolio/evidences/create.blade.php ==========
+
+@extends('layouts.dashboard')
+@section('title', 'Tambah Evidence')
+@section('content')
+<div class="p-6 max-w-2xl mx-auto">
+    <h1 class="text-3xl font-bold text-slate-900 mb-6">📝 Tambah Evidence Baru</h1>
+
+    <form action="{{ route('portfolio.evidences.store') }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-lg shadow-sm border border-slate-200 p-6 space-y-6">
+        @csrf
+
+        <!-- Title -->
+        <div>
+            <label for="title" class="block text-sm font-medium text-slate-900 mb-2">Judul Evidence *</label>
+            <input type="text" name="title" id="title" required
+                   class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-blue-500"
+                   placeholder="Contoh: Database Design Assignment Semester 4">
+            @error('title') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
+        </div>
+
+        <!-- Description -->
+        <div>
+            <label for="description" class="block text-sm font-medium text-slate-900 mb-2">Deskripsi</label>
+            <textarea name="description" id="description" rows="4"
+                      class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-blue-500"
+                      placeholder="Jelaskan isi dan tujuan evidence ini..."></textarea>
+            @error('description') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
+        </div>
+
+        <!-- Evidence Type -->
+        <div>
+            <label for="evidence_type" class="block text-sm font-medium text-slate-900 mb-2">Tipe Evidence *</label>
+            <select name="evidence_type" id="evidence_type" required
+                    class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-blue-500">
+                <option value="">Pilih tipe evidence...</option>
+                <option value="assignment">📝 Tugas/Assignment</option>
+                <option value="project">📊 Proyek</option>
+                <option value="certification">🏆 Sertifikasi</option>
+                <option value="reflection">💭 Refleksi</option>
+                <option value="peer_feedback">👥 Feedback Sejawat</option>
+            </select>
+            @error('evidence_type') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
+        </div>
+
+        <!-- File or Link -->
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label for="file" class="block text-sm font-medium text-slate-900 mb-2">Upload File</label>
+                <input type="file" name="file" id="file"
+                       class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-blue-500"
+                       accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.png,.zip">
+                <p class="text-xs text-slate-500 mt-1">Max 10MB (PDF, DOC, XLS, JPG, PNG, ZIP)</p>
+            </div>
+            <div>
+                <label for="external_link" class="block text-sm font-medium text-slate-900 mb-2">atau Link External</label>
+                <input type="url" name="external_link" id="external_link" 
+                       class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-blue-500"
+                       placeholder="https://...">
+                <p class="text-xs text-slate-500 mt-1">Google Drive, GitHub, dll</p>
+            </div>
+        </div>
+
+        <!-- CPMK Selection -->
+        <div>
+            <label for="cpmk_id" class="block text-sm font-medium text-slate-900 mb-2">CPMK/Sub-CPMK</label>
+            <select name="cpmk_id" id="cpmk_id"
+                    class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-blue-500">
+                <option value="">Pilih CPMK...</option>
+                @foreach($subCpmks ?? [] as $cpmk)
+                    <option value="{{ $cpmk->id }}">{{ $cpmk->kode }} - {{ $cpmk->deskripsi }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <!-- Reflection -->
+        <div>
+            <label for="reflection_notes" class="block text-sm font-medium text-slate-900 mb-2">Catatan Refleksi</label>
+            <textarea name="reflection_notes" id="reflection_notes" rows="3"
+                      class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-blue-500"
+                      placeholder="Jelaskan bagaimana evidence ini menunjukkan pencapaian CPMK..."></textarea>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex gap-3 pt-4 border-t border-slate-200">
+            <button type="submit" class="px-6 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700">
+                💾 Simpan Evidence
+            </button>
+            <a href="{{ route('portfolio.evidences.index') }}" class="px-6 py-2.5 bg-slate-100 text-slate-700 font-medium rounded-lg hover:bg-slate-200">
+                Batal
+            </a>
+        </div>
+    </form>
+</div>
+@endsection
+
+
+========== FILE 4: portfolio/evidences/edit.blade.php ==========
+
+@extends('layouts.dashboard')
+@section('title', 'Edit Evidence')
+@section('content')
+<div class="p-6 max-w-2xl mx-auto">
+    <h1 class="text-3xl font-bold text-slate-900 mb-6">✏️ Edit Evidence</h1>
+
+    @if($evidence->status !== 'draft')
+        <div class="mb-6 p-4 bg-amber-50 border-l-4 border-amber-400 rounded">
+            <p class="text-sm text-amber-900"><strong>⚠️ Perhatian:</strong> Hanya evidence dalam status draft yang dapat diedit.</p>
+        </div>
+    @endif
+
+    <form action="{{ route('portfolio.evidences.update', $evidence) }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-lg shadow-sm border border-slate-200 p-6 space-y-6">
+        @csrf
+        @method('PUT')
+
+        <div>
+            <label for="title" class="block text-sm font-medium text-slate-900 mb-2">Judul Evidence</label>
+            <input type="text" name="title" id="title" value="{{ $evidence->title }}" required
+                   class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-blue-500">
+        </div>
+
+        <div>
+            <label for="description" class="block text-sm font-medium text-slate-900 mb-2">Deskripsi</label>
+            <textarea name="description" id="description" rows="4"
+                      class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-blue-500">{{ $evidence->description }}</textarea>
+        </div>
+
+        <div>
+            <label for="reflection_notes" class="block text-sm font-medium text-slate-900 mb-2">Catatan Refleksi</label>
+            <textarea name="reflection_notes" id="reflection_notes" rows="3"
+                      class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-blue-500">{{ $evidence->reflection_notes }}</textarea>
+        </div>
+
+        <div class="flex gap-3 pt-4 border-t border-slate-200">
+            <button type="submit" class="px-6 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700">
+                💾 Simpan Perubahan
+            </button>
+            <a href="{{ route('portfolio.evidences.index') }}" class="px-6 py-2.5 bg-slate-100 text-slate-700 font-medium rounded-lg hover:bg-slate-200">
+                Batal
+            </a>
+        </div>
+    </form>
+</div>
+@endsection
+
+
+========== FILE 5: portfolio/evidences/show.blade.php ==========
+
+@extends('layouts.dashboard')
+@section('title', $evidence->title)
+@section('content')
+<div class="p-6 max-w-4xl mx-auto">
+    <div class="flex justify-between items-start mb-6">
+        <h1 class="text-3xl font-bold text-slate-900">{{ $evidence->title }}</h1>
+        <a href="{{ route('portfolio.evidences.index') }}" class="text-slate-600 hover:text-slate-900">← Kembali</a>
+    </div>
+
+    <div class="grid grid-cols-3 gap-6">
+        <!-- Main Content -->
+        <div class="col-span-2 space-y-6">
+            <!-- Status Card -->
+            <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="font-semibold text-slate-900">Status</h2>
+                    <span class="px-3.5 py-1.5 text-sm font-semibold rounded-full"
+                          style="background-color: {{ match($evidence->status) { 'approved' => '#dcfce7', 'submitted' => '#dbeafe', 'under_review' => '#fef3c7', 'draft' => '#f3f4f6', 'rejected' => '#fee2e2', default => '#f3f4f6' } }}; color: {{ match($evidence->status) { 'approved' => '#166534', 'submitted' => '#0c4a6e', 'under_review' => '#92400e', 'draft' => '#374151', 'rejected' => '#991b1b', default => '#374151' } }};">
+                        {{ ucfirst($evidence->status) }}
+                    </span>
+                </div>
+                <p class="text-sm text-slate-600">Dibuat: {{ $evidence->created_at->format('d M Y H:i') }}</p>
+                @if($evidence->reviewed_at)
+                    <p class="text-sm text-slate-600">Direview: {{ $evidence->reviewed_at->format('d M Y H:i') }}</p>
+                @endif
+            </div>
+
+            <!-- Description -->
+            @if($evidence->description)
+            <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
+                <h2 class="font-semibold text-slate-900 mb-3">📄 Deskripsi</h2>
+                <p class="text-slate-700 whitespace-pre-wrap">{{ $evidence->description }}</p>
+            </div>
+            @endif
+
+            <!-- File/Link -->
+            @if($evidence->file_path || $evidence->external_link)
+            <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
+                <h2 class="font-semibold text-slate-900 mb-3">📎 File/Link</h2>
+                @if($evidence->file_path)
+                    <p class="text-sm text-slate-600 mb-2">{{ $evidence->file_name }}</p>
+                    <a href="{{ route('portfolio.evidences.show', $evidence) }}" class="inline-block px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700">
+                        📥 Download File
+                    </a>
+                @elseif($evidence->external_link)
+                    <a href="{{ $evidence->external_link }}" target="_blank" class="inline-block px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700">
+                        🔗 Buka Link External
+                    </a>
+                @endif
+            </div>
+            @endif
+
+            <!-- Reflection -->
+            @if($evidence->reflection_notes)
+            <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
+                <h2 class="font-semibold text-slate-900 mb-3">💭 Refleksi</h2>
+                <p class="text-slate-700 whitespace-pre-wrap">{{ $evidence->reflection_notes }}</p>
+            </div>
+            @endif
+
+            <!-- Dosen Feedback -->
+            @if($evidence->dosen_feedback)
+            <div class="bg-blue-50 border-l-4 border-blue-400 rounded-lg p-6">
+                <h2 class="font-semibold text-blue-900 mb-3">💬 Feedback Dosen</h2>
+                <p class="text-blue-800">{{ $evidence->dosen_feedback }}</p>
+                @if($evidence->quality_rating)
+                    <p class="text-sm text-blue-700 mt-2">⭐ Rating: {{ $evidence->quality_rating }}/5</p>
+                @endif
+            </div>
+            @endif
+        </div>
+
+        <!-- Sidebar -->
+        <div class="space-y-6">
+            <!-- CPMK -->
+            @if($evidence->subCpmk)
+            <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
+                <h2 class="font-semibold text-slate-900 mb-3">🎯 CPMK</h2>
+                <p class="text-sm font-mono bg-slate-100 px-2 py-1 rounded mb-2">{{ $evidence->subCpmk->kode }}</p>
+                <p class="text-sm text-slate-700">{{ $evidence->subCpmk->deskripsi }}</p>
+            </div>
+            @endif
+
+            <!-- Type & Quality -->
+            <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6 space-y-3">
+                <div>
+                    <p class="text-xs font-medium text-slate-600 uppercase">Tipe</p>
+                    <p class="text-sm font-medium text-slate-900">{{ ucfirst($evidence->evidence_type) }}</p>
+                </div>
+                @if($evidence->quality_rating)
+                <div>
+                    <p class="text-xs font-medium text-slate-600 uppercase">Rating Kualitas</p>
+                    <p class="text-sm font-medium text-slate-900">⭐ {{ $evidence->quality_rating }}/5</p>
+                </div>
+                @endif
+            </div>
+
+            <!-- Actions -->
+            <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6 space-y-2">
+                @if($evidence->status === 'draft')
+                    <a href="{{ route('portfolio.evidences.edit', $evidence) }}" 
+                       class="block w-full px-4 py-2 text-center bg-blue-100 text-blue-700 font-medium rounded-lg hover:bg-blue-200 transition">
+                        ✏️ Edit
+                    </a>
+                    <form action="{{ route('portfolio.evidences.submit', $evidence) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="w-full px-4 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition">
+                            📤 Submit untuk Review
+                        </button>
+                    </form>
+                    <form action="{{ route('portfolio.evidences.destroy', $evidence) }}" method="POST" onsubmit="return confirm('Yakin?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="w-full px-4 py-2 bg-red-100 text-red-700 font-medium rounded-lg hover:bg-red-200 transition">
+                            🗑️ Hapus
+                        </button>
+                    </form>
+                @elseif($evidence->status === 'submitted' || $evidence->status === 'rejected')
+                    <a href="{{ route('portfolio.evidences.edit', $evidence) }}" 
+                       class="block w-full px-4 py-2 text-center bg-blue-100 text-blue-700 font-medium rounded-lg hover:bg-blue-200 transition">
+                        ✏️ Edit
+                    </a>
+                @endif
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

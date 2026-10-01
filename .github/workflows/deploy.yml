@@ -1,0 +1,174 @@
+name: 🚀 AutoDeploy Laravel — OBE Sistem Informasi
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - '.gitignore'
+      - 'LICENSE'
+
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Mode Deployment'
+        required: true
+        default: 'full'
+        type: choice
+        options:
+          - full
+          - update
+
+concurrency:
+  group: deploy-${{ github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  # ──────────────────────────────────────────────────────────
+  # JOB 1: DETECT & VALIDATE FRAMEWORK
+  # ──────────────────────────────────────────────────────────
+  detect:
+    name: 🔍 1. Detect & Validate
+    runs-on: ubuntu-latest
+    outputs:
+      app_type:    ${{ steps.detect.outputs.app_type }}
+      repo_slug:   ${{ steps.slug.outputs.repo_slug }}
+      has_artisan: ${{ steps.detect.outputs.has_artisan }}
+
+    steps:
+      - name: ⬇️ Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🏷️ Generate Repo Slug
+        id: slug
+        run: |
+          SLUG=$(echo "${{ github.event.repository.name }}" \
+            | tr '[:upper:]' '[:lower:]' \
+            | sed 's/[^a-z0-9-]/-/g' \
+            | sed 's/--*/-/g' \
+            | sed 's/^-//;s/-$//')
+          echo "repo_slug=$SLUG" >> "$GITHUB_OUTPUT"
+
+      - name: 🔎 Detect Framework
+        id: detect
+        run: |
+          if [[ -f "artisan" && -f "composer.json" ]]; then
+            echo "app_type=Laravel" >> "$GITHUB_OUTPUT"
+            echo "has_artisan=true" >> "$GITHUB_OUTPUT"
+          elif [[ -f "composer.json" ]]; then
+            echo "app_type=PHP Composer" >> "$GITHUB_OUTPUT"
+            echo "has_artisan=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "app_type=PHP Native" >> "$GITHUB_OUTPUT"
+            echo "has_artisan=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: 🧪 PHP Syntax Lint
+        run: |
+          find . -name "*.php" ! -path "./vendor/*" ! -path "./storage/*" -exec php -l {} \; | grep "Errors parsing" && exit 1 || echo "✅ All PHP files passed syntax check!"
+
+  # ──────────────────────────────────────────────────────────
+  # JOB 2: PACKAGE & TRIGGER DEPLOYMENT
+  # ──────────────────────────────────────────────────────────
+  deploy:
+    name: 🚀 2. Package & Deploy to VPS
+    runs-on: ubuntu-latest
+    needs: detect
+    env:
+      REPO_SLUG: ${{ needs.detect.outputs.repo_slug }}
+      APP_TYPE:  ${{ needs.detect.outputs.app_type }}
+      VPS_HOST:  103.180.124.142
+      VPS_PORT:  8080
+
+    steps:
+      - name: ⬇️ Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 📦 Create Deployment ZIP (Excluding Vendor & Node Modules)
+        run: |
+          find . \
+            -not -path "./.git/*" \
+            -not -path "./.github/*" \
+            -not -path "./node_modules/*" \
+            -not -path "./vendor/*" \
+            -not -name ".env" \
+            -not -name "deploy.zip" \
+            -not -name "*.log" \
+            | zip deploy.zip -@ -q
+
+          ZIP_SIZE=$(du -sh deploy.zip | cut -f1)
+          echo "ZIP_SIZE=$ZIP_SIZE" >> "$GITHUB_ENV"
+          echo "✅ Laravel deploy package created: $ZIP_SIZE"
+
+      - name: 🌐 Send Trigger to Server VPS
+        id: trigger
+        run: |
+          START_TIME=$(date +%s)
+          echo "Mengirim notifikasi AutoDeploy ke server $VPS_HOST:$VPS_PORT..."
+          
+          HTTP_CODE=$(curl -s -o response.txt -w "%{http_code}" \
+            -X POST \
+            -H "Content-Type: application/json" \
+            -d "{\"event\":\"push\",\"repository\":\"${{ github.repository }}\",\"commit\":\"${{ github.sha }}\",\"ref\":\"${{ github.ref }}\",\"app_type\":\"Laravel\"}" \
+            "http://$VPS_HOST:$VPS_PORT" || echo "000")
+
+          END_TIME=$(date +%s)
+          LATENCY=$((END_TIME - START_TIME))
+
+          echo "HTTP_CODE=$HTTP_CODE" >> "$GITHUB_ENV"
+          echo "LATENCY=${LATENCY}s" >> "$GITHUB_ENV"
+
+          if [[ "$HTTP_CODE" == "200" || "$HTTP_CODE" == "201" ]]; then
+            echo "DEPLOY_STATUS=SUCCESS" >> "$GITHUB_ENV"
+          else
+            echo "DEPLOY_STATUS=PENDING_SYNC" >> "$GITHUB_ENV"
+          fi
+
+      - name: 📝 Generate Job Summary (Dashboard)
+        if: always()
+        run: |
+          if [[ "${{ env.DEPLOY_STATUS }}" == "SUCCESS" ]]; then
+            STATUS_BADGE="🟢 SUKSES (Webhook Triggered & Synchronized)"
+          else
+            STATUS_BADGE="🟡 BERJALAN (Pending Synchronize)"
+          fi
+
+          cat >> "$GITHUB_STEP_SUMMARY" << EOF
+          # 🚀 AutoDeploy Laravel — $REPO_SLUG
+
+          Sistem Informasi OBE &bull; Program Studi S1 Teknologi Informasi FT ULM  
+          Dosen Pengampu: **Ir. Nor Anisa & Andry Fajar Zulkarnain, S.ST., M.T.**
+
+          ---
+
+          ### 📊 Informasi Build & Pipeline
+          | Parameter | Nilai / Keterangan |
+          | :--- | :--- |
+          | **Status Pipeline** | **$STATUS_BADGE** |
+          | **Tipe Aplikasi** | **Laravel Framework (PHP)** |
+          | **Repository** | \`${{ github.repository }}\` |
+          | **Branch** | \`${{ github.ref_name }}\` |
+          | **Commit SHA** | \`${{ github.sha }}\` |
+          | **Ukuran Paket ZIP** | \`${{ env.ZIP_SIZE }}\` (Vendor & node_modules dikecualikan) |
+          | **Latensi Transmisi** | \`${{ env.LATENCY }}\` |
+          | **Target Server VPS** | \`103.180.124.142\` (Ubuntu 24.04 LTS) |
+
+          ---
+
+          ### 🌐 Akses Layanan & Server
+          * **Dokploy PaaS Manager:** [http://103.180.124.142:3000](http://103.180.124.142:3000)
+          * **Domain Publik Server:** [http://103-180-124-142.sslip.io](http://103-180-124-142.sslip.io)
+          * **Akses Port Nginx Langsung:** [http://103.180.124.142:30000](http://103.180.124.142:30000)
+
+          ---
+
+          ### ⚙️ Langkah Setup Laravel di Production:
+          1. Di server/Dokploy, salin \`.env.example\` menjadi \`.env\`.
+          2. Jalankan \`composer install --no-dev --optimize-autoloader\`.
+          3. Jalankan \`php artisan key:generate\`.
+          4. Jalankan \`php artisan migrate --force\`.
+          5. Arahkan Webroot Nginx ke direktori \`public/\`.
+          EOF

@@ -1,0 +1,139 @@
+ROW1: 16653263600 || UNIVERSITAS SARI MULIA ¶ FAKULTAS …………………………………. ¶ PROGRAM STUDI …………………………….. ¶ TAHUN AKADEMIK ……………………………
+ROW2: RENCANA PEMBELAJARAN SEMESTER (RPS)
+ROW3: Mata Kuliah (MK) || Kode || Bobot (SKS) || Semester || Tanggal Penyusunan
+ROW4: Kebidanan || BI 34568 || 3 SKS ¶ (silahkan dijabarkan bagi yang mempunyai teori, praktik dan klinik) || …. ¶  (Genap) || 
+ROW6: OTORISASI / PENGESAHAN || Dosen Pengembang RPS || Ketua Program Studi
+ROW7:  || (……………………………………….) ¶ NIK. || (……………………………………….) ¶ NIK.
+ROW8: Capaian Pembelajaran || Capaian Pembelajaran Lulusan (CPL) yang dibebankan pada MK
+ROW9:  || CPL 1 || Mewujudkan sikap yang berasaskan Pancasila.
+ROW10:  || CPL 2 || Melaksanakan praktik kerja lapangan.
+ROW11:  || CPL 3 || Menerapkan pembelajaran berbasis lintas profesi.
+ROW12:  || dst .... || dst ………
+ROW13:  || Capaian Pembelajaran Mata Kuliah (CPMK)
+ROW14:  || CPMK 1 || Mengimplementasikan bekerja sama dalam kelompok.
+ROW15:  || CPMK 2 || Memahami pembelajaran lintas profesi.
+ROW16:  || CPMK 3 || Membuat laporan pembelajaran lintas profesi.
+ROW17:  || dst … || dst ………….
+ROW18:  || Kemampuan akhir tiap tahapan belajar (Sub CPMK)
+ROW19:  || Sub CPMK 1 || 
+ROW20:  || Sub CPMK 2 || 
+ROW21:  || Dst…… || Dst…..
+ROW22: Deskripsi Singkat Mata Kuliah || MK ini menjelaskan pembelajaran lintas profesi dalam lingkungan komunitas. Pembelajaran ini memfokuskan pada kemampuan mahasiswa bekerja sama dalam kelompok. Dst ……
+ROW23: Bahan Kajian || Kerjasama dalam kelompok; ¶ Pembelajaran lintas profesi; dan  ¶ Praktik komunitas lintas profesi.
+ROW24: Tautan Kelas Daring || 
+ROW25: Pustaka || Utama: ¶ http://e-resources.perpusnas.go.id/  ¶ https://pubmed.ncbi.nlm.nih.gov/  ¶ Pada pustaka utama ini, Bapak/Ibu diharapkan memberikan informasi akses artikel ilmiah yang dapat digunakan oleh mahasiswa. Selain itu, referensi yang disertakan harus yang terupdate dari 10 tahun terakhir. (Pernyataan ini silahkan dihapuskan bila sudah terisi).
+ROW26:  || Pendukung: ¶ Alona, J.W. (2015). Buku ini Pembelajaran Lintas Profesi. Hawaii: Publish.  ¶ Dst …………
+ROW27: Kriteria Penilaian &amp;  ¶ Blueprint Assesment CPL – CPMK (evaluasi Pembelajaran) || Kriteria Penilaian &amp; Blueprint Asesmen CPL–CPMK ¶ Pada bagian ini dituliskan (contoh, silahkan disesuaikan dengan CPmata kuliah) ¶ Basis Evaluasi || Kompoenen Evaluasi || Sub CPMK/CPMK || Deskripsi % Indikator || Metode Penilaian || Bobot %
+ROW28: Aktifitas Partisipatif || Diskusi kelas (case method) || CPMK 1–2 || Menunjukkan sikap profesional, komunikasi aktif, argumentasi berbasis evidence || Observasi + Rubrik || 10
+ROW29:  || Diskusi berbasis kasus || CPMK 1–6 || Menyusun argumen teori saat case discussion || Diskusi + Rubrik || 5
+ROW30:  || Praktik lapangan (team-based project) || CPMK 3–6 || Keterampilan teknis problem solving di lapangan || Observasi kinerja || 10
+ROW31: Hasil Proyek || Reflection paper || CPMK 1–2 || Refleksi etika, empati, profesionalisme || Portofolio || 10
+ROW32:  || Presentasi akhir kelompok || CPMK 3–4 || Kolaborasi, leadership, berbagi peran, presentasi hasil || Presentasi + Rubrik || 10
+ROW33:  || Produk Project (media, SOP, modul) || CPMK 3–4 || Produk berbasis evidence ≥ 5 sumber ilmiah || Penilaian produk || 15
+ROW34:  || Produk implementasi (simulasi/OSCE) || CPMK 3–6 || Praktik keterampilan sesuai SOP || Praktik/OSCE || 10
+ROW35: Sub total (minimal 50%) || 70
+ROW36: Kognitif/ ¶ Pengetahuan || Makalah &amp; presentasi kelompok || CPMK 1–6 || Kajian ilmiah sesuai kaidah akademik || Tugas terstruktur || 10
+ROW37:  || Online Quiz || CPMK 8–13 || Evaluasi formatif: soal aplikasi kasus dengan skor minimal 70% || Online quiz || 5
+ROW38:  || Ujian Tengah Semester (UTS) || CPMK 1–8 || Ujian sumatif 1: analisis teori dan kasus berbasis evidence || Tes tertulis || 5
+ROW39:  || Ujian Akhir Semester (UAS – OSCE + Essay) || CPMK 9–16 || Ujian sumatif 2: praktik keterampilan (OSCE) + analisis tertulis berbasis teori || OSCE + Essay || 10
+ROW40: Total Aktifitas Patisipatif + Hasil Proyek + Kognitif /Pengetahuan || 100
+ROW41: Kategori || Bobot (%) || Keterangan
+ROW42: Aktivitas partisipatif || 25% || Diskusi &amp; Kerja Tim (kelas&amp; lapangan)
+ROW43: Hasil Proyek || 45% || Produk Presentasi, simulasi refleksi
+ROW44: Kognitif/Pengetahuan || 30% || Tugas, Kuis, UTS &amp; UAS
+ROW45: Total || 100% || 
+ROW46: Dosen Pengampu || Aliyah, M.Pd (AY) 3. Budiman, Ph.D (BD) ¶ Dr. Adawiyah, M.Si (AW) 4. Sinar Rembulan, M.Si (SR)
+ROW47: Mata Kuliah Syarat || - ¶ (Diisi bila ada MK syarat, bila tidak berikan tanda strip (-))
+ROW48: Mg ¶ Ke- || Kemampuan Akhir Tiap Tahapan Belajar (CPMK) 3 || Penilaian || Bentuk Pembelajaran; Metode Pembelajaran; Penugasan Mahasiswa; ¶ [Estimasi Waktu] || Materi Pembelajaran ¶ [Pustaka || Bobot Penilaian (%) &amp; Dosen
+ROW49:  ||  || Indikator || Teknik &amp; Kreteria ||  ||  || 
+ROW50: (1) || (2) || (3) || (4) || (5) || (6) || (7) || (8)
+ROW51: 1,2 || SubCPMK- / CPMK 1: Mampu Menjelaskan Tentang Teori Yang Digunakan Sebagai Dasar Perumusan Masalah Dan Analis [C2,A3] || ketepatan Menjelaskan Tentang Pengetahuan, Ilmu Dan Filasafat; ¶ Ketetapan Menjelaskan Pengertian Etika Dalam Penelitian; ¶ Ketetapan Menjelaskan Pengertian Plagiasi, Mencegah Plagiasi, Dan Konsekwensi Tindakan Plagiasi. || Teknik Non-test: ¶ Meringkas Materi Kuliah  ¶ Kuis-1: Soal Esay || Kuliah; ¶ Diskusi; ¶ [PB:1mgx ¶ (2sksx50”)] || Diskusi asingkron; ¶ eLearning: MyTS- Classroom  ¶ [PB:1mgx (2sksx50”0} || Penjelasan RPS; ¶ Pengertian Pengetahuan,Ilmu Dan Filasat, Pendekatan Ilmiah Dan Non Ilmiah, Tugas Ilmu Dan Penelitian || 15%
+ROW52:  ||  ||  || Kreteria: ¶ Pedoman Penskoran  ¶ (Marking Scehem) || Tugas-1: Menyusun Ringkasan Dalam Bentuk Makalah Tentang: ¶ Pengertian Pengetahuan, Ilmu dan Filasafat Beserta Contoh nya ¶ Studi Kasus Etika Dalam Penelitian Terkait Dengan Plagiasi [PT:2mgx(2sksx60”)] [KM:2x (2x60”)] || Etika &amp; Plagiasi Dalam Penelitian. [6] hal.: 10 – 40 || 
+ROW53: 3,4 || SubCPMK-2/CPMK: mampu menjelaskan tahapan metode penelitian kualitatif dan kuantitatif [C2,A3] || 2.1 Ketepatan Membedakan Pengertian Dan Karakteristik Penelitian Kualitatif Dan Kuantitatif; ¶ 2.2 Ketepatan Menjelaskan Tahapan Metode Penelitian Kualitatif Dan Kuantitatif || Teknik Non-Test &amp; tes:  ¶ Menyusun Diagram Alir Tahapan Penelitian; ¶ Kuis-2: Soal Esay  ¶ Kreteri: ¶ Rubrik holistik || Kuliah; ¶ Diskusi; [PB:2x(2x50”)] || Diskusi asingkron; ¶ eLearning: MyTS-Classroom || Metode Penelitian: ¶ 1.Penelitian Kuantitatif ¶  1.1.Penelitian Ekspemen  ¶  a.Per-Experimental  ¶  a.1 One-Shot case study ¶  a.2 One-group pretest-posttes ¶  a.3 Intec-group comparison ¶  b. True-Experimental ¶  b.1 Posttes only control design  ¶  b.2 Pretest-control group design ¶  c. Factorial Experimental  ¶  d. Quasi Experimental  ¶  d.1 Time-series design  ¶  d.2 Nonequivalent control group ¶  design ¶  1.2 Penelitian non-Eksperimen  ¶  a. Descriptive ¶  b. Comperative ¶  c. Correlational ¶  d. History ¶ 2. Penelitian Kualitatif: ¶  2.1Phenomenology ¶  2.2 Grounded theory ¶  2.3 Ethnography ¶  2.4 Case study  ¶  2.5 Narative ¶  [2] hal. 3-49 || 15%
+ROW54:  ||  ||  ||  || Tugas-2: Menyusun Tahapan/Metode Penelitian dalam bentuk diagram aliran sesuai dengan masalah yang di pilih, beserta penjelasannya pada setiap tahapan penelitian dan melakukan presentasi ¶ [PT:2mgx(2skswx60”)] [KM:2x(2x60”)] ||  || 
+ROW55: 5,6 || SubCPMK-3/CPMK: mampu merumuskan permasalahan penelitian dan merumusakan hipotetsispenelitian dengan sumber rujukan bermutu, terukur dan sahih [C3,A3] || 3.1 ketepantan sistematikan dan mensarikan artikel journal; ¶ 3.2 ketepatan dan kesesuaian merumuskan masalah dan hipotetis deskriptif, kompartif, asosiatif dan komparatif-asosiatif; || Tekni non-test: ¶ Rumusan Ringkasan artikel journal dan road map nya; ¶ masalah dan hipotetis penelitian  ¶ Kreteri: ¶ Rubrik || Kuliah; ¶ Discovery Learning, Diskusi dalam kelompok; ¶ [PB: 2X(2X50”)] || Discovery Learning dan diskusi asingkron; ¶ eLearning: MyITS-Classrom. ¶ http// https://classrom. ¶ Its.ac.id/course/view. ¶ Php?id= 2575 Science Direct httpd://www.science direct.com/ || Merumuskan Masalah &amp; Hipotetis Penelitian: ¶ Kajian pusaka mengidentifikasi permasalahan, perumusan masalah dan hipotetis deskriptif, komparatif, asosiatif dan komparatif-asosiatif ¶ [1] hal. 58-139 ¶ [2] hal. 53-108 ¶ [4] hal. 27-112 || 15%
+ROW56:  ||  ||  ||  || Tugas-3: mengkaji dan mensarikan artikel journal dan merumuskan masalah dan hopotetis penelitian ¶ [PT:2x(2x50”)] ¶ [KM:2x(2x60”)] ||  || 
+ROW57: 7 || SubCPMK-4/CPMK: mampu menjelaskan validitas dan reliabilitas pengukuran dalam penelitian [C2,A3] || 4.1 ketepatan menjelaskan pengertian valitidas beserta contohnya; || Teknik Test: ¶ Kuia-3: Soal Esay  ¶ Kreteri:  ¶ Pedoman Penskoran ¶ (Marking Scheme) || Kuliah; ¶ Diskusi; eLearning: MyITS-C ¶ [PB: 1x(2x50”)] || Diskusi asingkron; ¶ eLearning MyITS-classroom  ¶ http:// https://classroom.its.ac.id/course/ ¶ view.  ¶ Php?id=2575 || Validitas &amp; Reliabilitas : ¶ Validitas &amp; Reliabilitas instrument penelitian ¶ [2] hal. 361-374 ¶ [5] hal 348-367 || 5%
+ROW58: 8 || ETS / Evalusai Tengah Semester: Melakukan Validasi Hasil Penilaian, Evaluasi dan Perbaikan Proses Pembelajaran Berikutnya
+ROW59: 9,10 || SubCPMK-5/CPMK: Mampu memilih, menetapkan, dan menjelaskan tekni mengolah data sampel penilaian dengan sistematis, bermutu dan terukur ¶ [C3,A3] || 5.1 Ketepatan menjelaskan perbedaan populasi dan sampel; ¶ 5.2 Ketepatan menjelaskan berbagai teknik penentuan sampel; ¶ 5.3 Ketepatan menentukan jumlah sampel; ¶ 5.4 Ketepatan teknik mengolah data || Teknik test: ¶ Kuis-4: Soal Esay ¶ Teknik Non-test: ¶ Penilaian dokemuen penentu sampel penelitian  ¶ Kreteri: ¶ Rabrik || Minggu-9: ¶ Kuliah: ¶ Study Kasus, ¶ [PB:1x(2x50”)] || Minggu-10: ¶ Kuliah Daring; ¶ Diskusi asingkron ¶ eLearning: My:ITS-Classroom  ¶ http:// https://classroom.its.ac.id/course/view. ¶ Php?id=2575 || Memperoleh &amp; mengolah data penelitian:  ¶ Terminologi yang sering di gunakan, Jenis data (kuantitatif, kualitatif)’ data sekunder, data primer, alasan pemilihan sampel, karakteristik sampel, teknik penentuan sampel, desain sampel. ¶ Teknik mengolah data sampel  ¶ [1] hal. 140-173, 175-264; ¶ [2] hal. 119—134, 119-266; ¶ [5] hal. 29-83, 61-280; || 15%
+ROW60:  ||  ||  ||  || Tugas-4: Study kasus: memilih dan mendesain sampel berdasarkan variabel penelitian, beserta teknik mengolah data sampel. ¶ [PT:2mgx(2sksx60”)] ¶ [KM:2x(2x60”)] ||  || 
+ROW62:  || Flipped Classroom – dg Metoda Projact Learning (PjBL)
+ROW63: 11 || SubCPMK-6/CPMK: ¶ Mampu meraancang penelitian dalam bentuk proposal penelitian TA &amp; mempresentasikan nya dengan kinerja mandiri, bermutu, da terukur [C6,A3,P3] || 6.1 Ketepatan sistematika proposal; ¶ 6.2 Ketepatan tata tulis proposal; ¶ 6.3 Konsitensi penulisan proposal; ¶ 6.4 Kerapian sajian proposal; ¶ 6.5 Penguasaan materi proposal; ¶ 6.6 Kompleksitas berfikir; ¶ 6.7 Tepat waktu &amp; kesesuaian dengan rencana tugas; ¶ 6.8 Efektifitas presentasi  ¶ Tidak melakukan:  ¶ Fabrikasi data; ¶ Falsifikasi data; ¶ Plagiasi; ¶ Menggunakan rujukan yang dapat di pertanggung jawabkan; || Teknik Non-test: ¶ Review dokumen proposal penelitian; ¶ Presentasi mandiri ¶ Kreteri:  ¶ Rubrik deskriptif || Minggu-11: ¶ Tutorial-penjelasan pelaksaan PjBL  ¶ Diskusi kelompok; ¶ Penjelasan &amp; diskusi tentang kerangka proposal penelitian  ¶ [PB : 1x(2x50”)] || Diskusi asingkron; || Merancang &amp; menyusun proposal penelitian TA: ¶ Rancangan penelitian; anatomi proposal penelitian; sistematika dan tata tulis proposal penelitian sesuai dengan standar internasional ¶ [1] hal. 265-291, 293-336 ¶ [2] hal. 267-276, 375-386 || 
+ROW64:  ||  ||  ||  || Tugas A5 Menggali permasalahan penelitian dan merumuskan permasalahan penelitian serta membuat perencaan &amp; jadwal, melalui: ¶ Permasalahan dunianya, dan beberapa web relepan; ¶ [PT:1x(2x20”)] ¶ [KM:1x(2x60”)] ||  || 
+ROW65:  ||  ||  ||  || Minggu-12: ¶ Responsi; ¶ Tachnical assistance  ¶ Presentasi &amp; diskusi tentang rumusan masalah &amp; kerangka proposal penelitian ¶ [PB:1x(2x50”)] || Minggu-13: ¶ Diskusi singkron; ||  || 
+ROW66:  ||  ||  ||  || Tugas 5B : Menyusun draf proposal penelitian, Melakukan literasi jurnal sebagai rujukan dengan membuat ringkasan menggunakan:  ¶ https://www.siencedirect.com/ ¶ [PT:2x(2x60”)] ¶ [KM:2x(2x60”)] ||  || 
+ROW67: 14,15 ||  ||  ||  || Minggu-14: ¶ Responsi; ¶ Technical assistance presentasi &amp; diskudi draf proposal  ¶ [PB :1x(2x50”)] || Minggu-15:  ¶ Presentasi proposal penelitian TA akhir &amp; diskusi daring  ¶ [PB: 1x(2x50”)] ||  || 
+ROW68:  ||  ||  ||  || Tugas 5C: Finalisasi proposal penelitian, digitalisasi, di sertai ppt dan video presentasi, di kumpulkan melalui: ¶ MyITC-Classroom:http:// https://classroom.its.ac.id/course/view.php?id=2575 ¶ [PT:2x(2x60”)] ¶ [KM:2x(2x60”)] ||  || 
+ROW69: 16 || EAS / Evaluasi Akhir Semester: Melakukan validasi penilaian akhir dan menentukan ketululusan mahasiswa || 
+ROW70:  ||  || Total Bobot Penilaian || 100%
+ROW71: 66549-716700 || UNIVERSITAS SARI MULIA ¶ FAKULTAS …………………………………. ¶ PROGRAM STUDI …………………………….. ¶ TAHUN AKADEMIK ……………………………
+ROW72: KONTRAK PEMBELAJARAN
+ROW73: MATA KULIAH || Nama MK || Pembelajaran Lintas Profesi
+ROW74:  || Kode || BI1429936
+ROW75:  || Bobot (SKS) || 2 SKS
+ROW76:  || Semester || …. (Genap)
+ROW77: DESKRIPSI MATA KULIAH
+ROW78: MK ini menjelaskan pembelajaran lintas profesi dalam lingkungan komunitas. Pembelajaran ini memfokuskan pada kemampuan mahasiswa bekerja sama dalam kelompok. Dst ……
+ROW79: CAPAIAN PEMBELAJARAN LULUSAN (CPL)
+ROW80: CPL 1 || Mewujudkan sikap yang berasaskan Pancasila.
+ROW81: CPL 2 || Melaksanakan praktik kerja lapangan.
+ROW82: CPL 3 || Menerapkan pembelajaran berbasis lintas profesi.
+ROW83: dst .... || dst ………
+ROW84: CAPAIAN PEMBELAJARAN MATA KULIAH (CPMK)
+ROW85: CPMK 1 || Mengimplementasikan bekerja sama dalam kelompok.
+ROW86: CPMK 2 || Memahami pembelajaran lintas profesi.
+ROW87: CPMK 3 || Membuat laporan pembelajaran lintas profesi.
+ROW88: dst … || dst ………….
+ROW89: SUB CAPAIAN PEMBELAJARAN MATA KULIAH (SUB CPMK)
+ROW90: Sub CPMK 1 || 
+ROW91: Dst…. || …..
+ROW92: MATERI PEMBELAJARAN
+ROW93: 1. || Kerjasama dalam kelompok;
+ROW94: 2. || Pembelajaran lintas profesi; dan
+ROW95: 3. || Praktik komunitas lintas profesi.
+ROW96: dst || dst
+ROW97: PUSTAKA UTAMA
+ROW98: 1. || ………….
+ROW99: 2. || Cyntia, W.A. (2020). Interprofessional Education in Multidicipliner. Journal of Main Education, 34 (2), 12-18.
+ROW100: 3. || http://e-resources.perpusnas.go.id/.
+ROW101: dst || dst
+ROW102: PUSTAKA PENDUKUNG
+ROW103: 1. || Alona, J.W. (2015). Buku ini Pembelajaran Lintas Profesi. Hawaii: Publish.
+ROW104: dst || dst
+ROW105: MATA KULIAH SYARAT || - ¶ (Diisi bila ada MK syarat, bila tidak berikan tanda strip (-))
+ROW106: TAUTAN PEMBELAJARAN
+ROW107: Learning management system (lms) Universitas Sari Mulia: https://lms.unism.ac.id/. ¶ You tube @....
+ROW108: DOSEN PENGAMPU || Aliyah, M.Pd (AY) ¶ Budiman, Ph.D (BD) ¶ Dr. Adawiyah, M.Si (AW) ¶ Sinar Rembulan, M.Si (SR)
+ROW109: KETENTUAN TAMBAHAN
+ROW110: 1. || Mahasiswa harus hadir 15 menit sebelum kegiatan pembelajaran dilaksanakan.
+ROW111: 2. || Mahasiswa harus memperhatikan etika dalam pembelajaran dengan tidak melakukan pembelajaran daring di tempat tidur.
+ROW112: 3. || Mahasiswa harus menggunakan nama asli dan membuka video ketika kegiatan perkuliahan berlangsung.
+ROW113: dst || dst
+ROW114: JADWAL PEMBELAJARAN
+ROW115: Hari/Tanggal || Waktu (WITA) || Dosen Pengampu
+ROW116: Selasa, 10 Sept 2020 || 09.00 – 10.40 || Sinar Rembulan, M.Si (SR)
+ROW117: dst || dst || dst
+ROW118: Dosen Pengembang RPS, ¶ (…………………………………………...) ¶ NIK. || Banjarmasin, ………………………… ¶ Mahasiswa PJMK  ¶ MK ……………………… ¶ (…………………………………………...) ¶ NIM.
+ROW119: 546101079500 || UNIVERSITAS SARI MULIA ¶ FAKULTAS …. ¶ PROGRAM STUDI ….
+ROW120: RENCANA TUGAS MAHASISWA
+ROW121: MATA KULIAH || Tuliskan nama MK
+ROW122: KODE || Tuliskan Kode MK || sks || Tuliskan sks || SEMESTER || Tuliskan letak sem
+ROW123: DOSEN PENGAMPU || Tuliskan nama Dosen pengampu
+ROW124: BENTUK TUGAS
+ROW125: Tuliskan bentuk MK ¶ Contoh: mengerjakan soal ¶ Membuat makalah ¶ Mendesain  ¶ Mereview Jurnal ¶ ….
+ROW126: JUDUL TUGAS
+ROW127: Tuliskan judul Tugas, contoh: ¶ Tugas-3: Menyelesaikan soal – materi … secara mandiri ¶ Tugas-5: Menyusun makalah secara berkelompok ¶ Tugas- 8: Mendesain … secara berkelompok
+ROW128: SUB CAPAIAN PEMBELAJARAN MATA KULIAH
+ROW129: Tuliskan Sub CP MK yang akan dicapai melalui Tugas = Kolom( 2) RPS
+ROW130: DISKRIPSI TUGAS
+ROW131: Tuliskan penjabaran pelakasanaan tugas ¶ Contoh: ¶ Mahasiswa menyelesaikan 5 soal ttg materi / bahan kajian ... ¶ Mahasiswa menyusun laporan secara berkolempok, setiap kelompok = ... mahasiswa
+ROW132: METODE PENGERJAAN TUGAS
+ROW133: Tuliskan tahapan dalam pelaksanaan Tugas, khususnya yang berbentuk: ¶ Desain ¶ Penyusunan Laporan ¶ Penyusunan makalah ¶ Review Jurnal ¶ ...
+ROW134: BENTUK DAN FORMAT LUARAN
+ROW135: Tulisakan bentuk dan format luaran, khusus untuk tugas berbentuk: ¶ Desain ¶ Penyusunan Laporan ¶ Penyusunan makalah ¶ Review Jurnal ¶ Dan lain yang setara
+ROW136: INDIKATOR DAN BOBOT PENILAIAN
+ROW137: Tuliskan indikator dari hasil tugas yang menunjukkan sub cp mk tercapai dan bobot penilaian (diambilkan dari RPS kolom 3 dan 8)
+ROW138: JADWAL PELAKSANAAN
+ROW139: Tuliskan jadwal pelaksanaan khusus untuk tugas yang membutuhkan waktu lebih dari 1 minggu (bentuk tugas desain, penyusunan laporan, penyusunan makalah, review jurnal, dll) || Contoh: ¶ Pengumpulan Nama obyek desain: 1 April 2020 ¶ Pengumpulan data obyek desain: ... ¶ Pengumpulan Prosedur desain:... ¶ ... ¶ Pengumpulan laporan hasil desain: ...
+ROW140: DAFTAR RUJUKAN
+ROW141: Tuliskan reff yang dapat digunakan untuk menyelesaikan Tugas ¶ Contoh: ¶ Buku ..., halaman .... ¶ Jurnal..... ¶ Laporan hasil penelitian ....
